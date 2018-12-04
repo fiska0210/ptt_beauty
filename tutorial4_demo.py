@@ -173,7 +173,7 @@ if __name__ == '__main__':
                     # print(page)
                     if page:
                         img_urls = parse(page)
-                        if push_counter > 10 :
+                        if push_counter > 20 :
                             print("push = " + str(push_counter))
                             save(img_urls, article['title'], times, datapath)
                             # print("title")
