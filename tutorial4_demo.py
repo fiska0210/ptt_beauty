@@ -105,7 +105,7 @@ def lineNotify(msg, picURI):
  
 def read_floder(datapath,times):
     print("read fresh folder!")
-    print(datapath)
+    # print(datapath)
 
     for dirname, dirnames, filenames in os.walk('.'):
         for f in filenames:
@@ -116,7 +116,7 @@ def read_floder(datapath,times):
                 filepath = str(dirname) + "/" + str(f)
                 print(filepath)
                 msg = 'https://www.ptt.cc/' + str(datapath)
-                lineNotify(msg, filepath)
+                # lineNotify(msg, filepath)
 
                 print("send to line!") 
 
@@ -131,15 +131,15 @@ if __name__ == '__main__':
         for each_line in f :
                 #a = each_line.split("\n")
                 #read.append(str(each_line.split("\n")))
-            read = each_line.split("\n")
-        print(each_line)
-        print(read[0])
+            read = each_line.split(",")
+        # print(each_line)
+        print(read)
     
 
     if current_page:
         articles = []  # all articles today
         date = time.strftime("%m/%d").lstrip('0')  # date of today, remove '0' in front to match format of PTT 
-        print(date)
+        # print(date)
         # date = '10/12'        
         current_articles, prev_url = get_articles(current_page, date)  # today's articles in current page
         
@@ -152,18 +152,18 @@ if __name__ == '__main__':
         # got article-list and starting enter to each article and imgread
         with open('record.txt', 'w') as w :
             for i in range(len(read)) : 
-                w.write(read[i])
-                #w.write("\n")
+                w.write(read[i] + ',')
+                # w.write("\n")
 
             for article in articles:
                 datapath = article['href']
                 push_counter = article['push_count']
-                print(datapath)
-                print(push_counter)
+                # print(datapath)
+                # print(push_counter)
                 if datapath not in read : 
-                    w.write(datapath)
-                    w.write("\n")
-                    print('Processing', article)
+                    w.write(datapath + ',')
+                    # w.write("\n")
+                    # print('Processing', article)
                     
                     # datapath = article['href']
                     #rprint(datapath)
@@ -175,7 +175,7 @@ if __name__ == '__main__':
                         img_urls = parse(page)
                         if push_counter > 20 :
                             print("push = " + str(push_counter))
-                            save(img_urls, article['title'], times, datapath)
+                            # save(img_urls, article['title'], times, datapath)  !!!!!!!should open
                             # print("title")
                             # print(article['title'])
                             times = times + 1
