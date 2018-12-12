@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import requests
 import time
 from bs4 import BeautifulSoup
@@ -116,7 +117,7 @@ def read_floder(datapath,times):
                 filepath = str(dirname) + "/" + str(f)
                 print(filepath)
                 msg = 'https://www.ptt.cc/' + str(datapath)
-                # lineNotify(msg, filepath)
+                lineNotify(msg, filepath)
 
                 print("send to line!") 
 
@@ -127,6 +128,7 @@ if __name__ == '__main__':
     token = "06OrDKN9pqYaTIe7dYaA26bmiStbUCRvzDc5ZVulCNT"
     times = 0
     read = []
+    os.system("rm -rf file*")
     with open('record.txt') as f:
         for each_line in f :
                 #a = each_line.split("\n")
@@ -153,7 +155,7 @@ if __name__ == '__main__':
         with open('record.txt', 'w') as w :
             for i in range(len(read)) : 
                 w.write(read[i] + ',')
-                # w.write("\n")
+            #     # w.write("\n")
 
             for article in articles:
                 datapath = article['href']
@@ -163,7 +165,7 @@ if __name__ == '__main__':
                 if datapath not in read : 
                     w.write(datapath + ',')
                     # w.write("\n")
-                    # print('Processing', article)
+                    print('Processing', article)
                     
                     # datapath = article['href']
                     #rprint(datapath)
@@ -175,13 +177,16 @@ if __name__ == '__main__':
                         img_urls = parse(page)
                         if push_counter > 20 :
                             print("push = " + str(push_counter))
-                            # save(img_urls, article['title'], times, datapath)  !!!!!!!should open
+                            save(img_urls, article['title'], times, datapath)  #!!!!!!!should open
                             # print("title")
                             # print(article['title'])
                             times = times + 1
                             article['num_image'] = len(img_urls)
                         else : 
                            continue
+                else :
+                    print("send already!")
+                    continue
 
 
         # store article data
