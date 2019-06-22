@@ -21,7 +21,7 @@ def get_web_page(url):
         cookies={'over18': '1'}
     )
     if resp.status_code != 200:
-        print('Invalid url:', resp.url)
+        # print('Invalid url:', resp.url)
         return None
     else:
         return resp.text
@@ -86,7 +86,8 @@ def save(img_urls, title, times, datapath): #nooooot yet!
                 urllib.request.urlretrieve(img_url, os.path.join(dname, fname))
             read_floder(datapath,times)
         except Exception as e:
-            print(e)
+            # print(e)
+            print("GG")
     print("final done!!!")
 
 
@@ -100,7 +101,6 @@ def lineNotify(msg, picURI):
     payload = {'message': msg}
     files = {'imageFile': open(picURI, 'rb')}
     r = requests.post(url, headers = headers, params = payload, files = files)
-    #r = requests.post(url, headers = headers, files = files)
     return r.status_code
     print("api done!")
  
@@ -112,12 +112,12 @@ def read_floder(datapath,times):
         for f in filenames:
             #print("times :" + str(dirname[7]))
             if str(dirname[2:7]) == "file"+str(times) :
-                print("tset " + str(dirname[2:7]))
+                # print("tset " + str(dirname[2:7]))
                 # if dirname[7] == time : 
                 filepath = str(dirname) + "/" + str(f)
-                print(filepath)
+                # print(filepath)
                 msg = 'https://www.ptt.cc/' + str(datapath)
-                lineNotify(msg, filepath)
+                # lineNotify(msg, filepath)
 
                 print("send to line!") 
 
@@ -135,13 +135,15 @@ if __name__ == '__main__':
                 #read.append(str(each_line.split("\n")))
             read = each_line.split(",")
         # print(each_line)
-        print(read)
+        # print(read)
     
 
     if current_page:
         articles = []  # all articles today
-        date = time.strftime("%m/%d").lstrip('0')  # date of today, remove '0' in front to match format of PTT 
-        # print(date)
+        # date = time.strftime("%m/%d").lstrip('0')  # date of today, remove '0' in front to match format of PTT 
+        date='3/25'
+        print(date)
+        
         # date = '10/12'        
         current_articles, prev_url = get_articles(current_page, date)  # today's articles in current page
         
@@ -165,19 +167,19 @@ if __name__ == '__main__':
                 if datapath not in read : 
                     w.write(datapath + ',')
                     # w.write("\n")
-                    print('Processing', article)
+                    # print('Processing', article)
                     
                     # datapath = article['href']
                     #rprint(datapath)
                     
                     
                     page = get_web_page(PTT_URL + article['href'])
-                    # print(page)
+                    # print("page is :" + str(page))
                     if page:
                         img_urls = parse(page)
                         if push_counter > 20 :
                             print("push = " + str(push_counter))
-                            save(img_urls, article['title'], times, datapath)  #!!!!!!!should open
+                            # save(img_urls, article['title'], times, datapath)  #!!!!!!!should open
                             # print("title")
                             # print(article['title'])
                             times = times + 1
